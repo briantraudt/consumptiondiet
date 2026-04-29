@@ -15,65 +15,86 @@ const consumptionAreas = [
 export default function Home() {
   return (
     <main>
-      <section className="relative min-h-[92vh] overflow-hidden bg-[#061f34] text-white">
-        <Image
-          alt="Consumption Diet brand over a mountain lake at sunrise"
-          className="absolute inset-0 h-full w-full object-cover"
-          fill
-          priority
-          sizes="100vw"
-          src="/brand/consumption-diet-hero.png"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/95 via-[#061f34]/70 to-[#061f34]/25" />
-        <div className="absolute inset-x-0 top-0 z-10 border-b border-white/15">
+      <section className="bg-white text-[#061f34]">
+        <div className="border-b border-[#dbe4ea]">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 sm:px-8 lg:px-10">
             <a className="flex items-center gap-3" href="#">
               <Image
                 alt=""
                 aria-hidden="true"
-                className="h-10 w-10 rounded-full object-cover"
+                className="h-8 w-8 rounded-full object-cover"
                 height={80}
                 src="/brand/consumption-diet-mark.png"
                 width={80}
               />
-              <span className="text-sm font-semibold uppercase tracking-[0.22em]">
+              <span className="text-sm font-semibold uppercase tracking-[0.2em]">
                 Consumption Diet
               </span>
             </a>
             <a
-              className="hidden text-sm font-semibold uppercase tracking-[0.16em] text-white/80 transition hover:text-white sm:inline"
+              className="hidden text-sm font-semibold uppercase tracking-[0.16em] text-[#061f34]/70 transition hover:text-[#061f34] sm:inline"
               href="#signup"
             >
               Join
             </a>
           </div>
         </div>
-        <div className="relative z-10 mx-auto flex min-h-[92vh] max-w-6xl flex-col justify-end px-6 pb-16 pt-28 sm:px-8 lg:px-10">
-          <div className="max-w-3xl">
-            <p className="mb-6 text-sm font-semibold uppercase tracking-[0.22em] text-[#4aa23a]">
+
+        <div className="mx-auto grid min-h-[76vh] max-w-6xl items-center gap-14 px-6 py-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-24">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#4aa23a]">
               Less noise. More life.
             </p>
-            <h1 className="text-balance text-6xl font-semibold leading-[0.95] text-white sm:text-7xl lg:text-8xl">
+            <h1 className="mt-6 max-w-4xl text-balance text-6xl font-semibold leading-[0.95] text-[#061f34] sm:text-7xl lg:text-8xl">
               Consume Less. Live Better.
             </h1>
-            <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/85 sm:text-2xl sm:leading-9">
+            <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-stone-700 sm:text-2xl sm:leading-9">
               A simple challenge to reduce noise, distraction, and excess so
               you can regain clarity, discipline, and purpose.
             </p>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#signup"
+                className="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#061f34] px-6 text-base font-semibold text-white transition hover:bg-[#0a304e] focus:outline-none focus:ring-2 focus:ring-[#061f34] focus:ring-offset-2"
+              >
+                Start the 7-Day Consumption Diet
+              </a>
+              <a
+                href="#story"
+                className="inline-flex min-h-12 items-center justify-center rounded-sm border border-[#cfdbe3] px-6 text-base font-semibold text-[#061f34] transition hover:border-[#061f34] hover:bg-[#f7fafb] focus:outline-none focus:ring-2 focus:ring-[#061f34] focus:ring-offset-2"
+              >
+                Read the story
+              </a>
+            </div>
           </div>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#signup"
-              className="inline-flex min-h-12 items-center justify-center rounded-sm bg-white px-6 text-base font-semibold text-[#061f34] transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
-            >
-              Start the 7-Day Consumption Diet
-            </a>
-            <a
-              href="#story"
-              className="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/50 px-6 text-base font-semibold text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
-            >
-              Read the story
-            </a>
+
+          <div className="relative">
+            <div className="mx-auto max-w-md border border-[#dbe4ea] bg-[#f7fafb] p-8 sm:p-10">
+              <div className="flex items-center justify-center gap-5 text-5xl font-semibold sm:text-6xl">
+                <span className="text-[#ef2d2d]">-</span>
+                <span className="text-[#061f34]">=</span>
+                <span className="text-[#4aa23a]">+</span>
+              </div>
+              <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden bg-[#dbe4ea] text-sm font-semibold uppercase tracking-[0.14em]">
+                <div className="bg-white px-4 py-4 text-[#ef2d2d]">Less</div>
+                <div className="bg-white px-4 py-4 text-[#4aa23a]">More</div>
+                <div className="bg-white px-4 py-4 text-[#061f34]/70">
+                  Noise
+                </div>
+                <div className="bg-white px-4 py-4 text-[#061f34]/70">
+                  Purpose
+                </div>
+                <div className="bg-white px-4 py-4 text-[#061f34]/70">
+                  Excess
+                </div>
+                <div className="bg-white px-4 py-4 text-[#061f34]/70">
+                  Clarity
+                </div>
+              </div>
+              <p className="mt-8 text-center text-sm font-semibold uppercase tracking-[0.18em] text-[#061f34]">
+                Less is more
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -172,26 +193,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-[#061f34] px-6 py-16 text-white sm:px-8 lg:px-10">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="max-w-sm">
-            <Image
-              alt="Consumption Diet logo"
-              className="h-auto w-full"
-              height={1024}
-              src="/brand/consumption-diet-logo-lockup.png"
-              width={1536}
-            />
-          </div>
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#4aa23a]">
-              Less is more
-            </p>
-            <p className="mt-4 max-w-2xl text-3xl font-semibold leading-tight text-white sm:text-4xl">
-              Remove what drains attention. Keep what builds purpose, health,
-              relationships, and faith.
-            </p>
-          </div>
+      <section className="border-y border-[#dbe4ea] bg-[#061f34] px-6 py-16 text-white sm:px-8 lg:px-10">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-3xl text-2xl font-semibold leading-tight sm:text-3xl">
+            Remove what drains attention. Keep what builds purpose, health,
+            relationships, and faith.
+          </p>
+          <a
+            className="inline-flex min-h-12 items-center justify-center rounded-sm bg-white px-6 text-base font-semibold text-[#061f34] transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
+            href="#signup"
+          >
+            Begin the reset
+          </a>
         </div>
       </section>
 
