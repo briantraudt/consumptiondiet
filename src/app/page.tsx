@@ -42,14 +42,14 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/88 via-[#061f34]/48 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#061f34]/70 to-transparent" />
 
-          <div className="absolute left-6 top-6 z-20 sm:left-8 sm:top-8 lg:left-10">
+          <div className="absolute left-0 right-0 top-12 z-20 flex justify-center px-6 sm:left-8 sm:right-auto sm:top-8 sm:block sm:px-0 lg:left-10">
             <a className="block" href="#" aria-label="Consumption Diet home">
               <Image
                 alt="Consumption Diet"
-                className="h-auto w-60 opacity-95 sm:w-72"
+                className="h-auto w-72 opacity-95 sm:w-72"
                 height={167}
                 priority
-                src="/brand/consumption-diet-logo-white.png"
+                src="/brand/consumption-diet-logo-hero-mobile.png"
                 width={1809}
               />
             </a>
@@ -72,19 +72,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 bg-[#061f34]/90 text-white backdrop-blur-md">
-            <div className="mx-auto max-w-6xl px-3 py-4 sm:px-8 sm:py-0 lg:px-10">
-              <div className="grid grid-cols-4 gap-x-1 gap-y-4 sm:flex sm:justify-between sm:gap-8">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#061f34]/82 via-[#061f34]/42 to-transparent text-white sm:bg-[#061f34]/90 sm:backdrop-blur-md">
+            <div className="mx-auto max-w-6xl px-3 pb-5 pt-12 sm:px-8 sm:py-0 lg:px-10">
+              <div className="flex flex-wrap justify-center gap-x-2 gap-y-5 sm:flex-nowrap sm:justify-between sm:gap-8">
                 {heroCategories.map(({ icon: Icon, label, mobileLabel, tone }) => (
                   <div
-                    className="flex min-w-0 flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:min-w-max sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
+                    className="flex basis-[23%] flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
                     key={label}
                   >
                     <span
                       className={
                         tone === "more"
-                          ? "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#4aa23a] text-[#4aa23a] sm:h-10 sm:w-10"
-                          : "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#ef2d2d] text-[#ef2d2d] sm:h-10 sm:w-10"
+                          ? "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white text-white sm:h-10 sm:w-10 sm:border-[#4aa23a] sm:text-[#4aa23a]"
+                          : "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white text-white sm:h-10 sm:w-10 sm:border-[#ef2d2d] sm:text-[#ef2d2d]"
                       }
                     >
                       <Icon
