@@ -1,6 +1,7 @@
 import {
   Crosshair,
   Dumbbell,
+  Menu,
   Smartphone,
   SquarePlay,
   UsersRound,
@@ -53,6 +54,25 @@ export default function Home() {
             >
               Join
             </a>
+            <details className="relative sm:hidden">
+              <summary
+                aria-label="Open menu"
+                className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-sm border border-[#dbe4ea] text-[#061f34] marker:hidden"
+              >
+                <Menu aria-hidden="true" size={24} strokeWidth={2.2} />
+              </summary>
+              <div className="absolute right-0 top-13 z-30 grid min-w-44 gap-1 border border-[#dbe4ea] bg-white p-2 text-sm font-semibold uppercase tracking-[0.14em] shadow-lg">
+                <a className="px-4 py-3 hover:bg-[#f7fafb]" href="#what">
+                  What
+                </a>
+                <a className="px-4 py-3 hover:bg-[#f7fafb]" href="#story">
+                  Story
+                </a>
+                <a className="px-4 py-3 hover:bg-[#f7fafb]" href="#signup">
+                  Join
+                </a>
+              </div>
+            </details>
           </div>
         </div>
 
@@ -69,10 +89,10 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/88 via-[#061f34]/48 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#061f34]/70 to-transparent" />
 
-          <div className="relative mx-auto flex min-h-[86vh] max-w-6xl items-center px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
-            <div className="max-w-3xl border-l-2 border-[#4aa23a] pl-6 sm:pl-8">
-              <h1 className="max-w-4xl text-balance text-6xl font-semibold leading-[0.93] text-white drop-shadow-sm sm:text-7xl lg:text-8xl">
-                Consume Less.
+          <div className="relative mx-auto flex min-h-[86vh] max-w-6xl items-center px-6 pb-44 pt-16 sm:px-8 sm:pb-36 lg:px-10 lg:py-20">
+            <div className="max-w-3xl border-l-2 border-[#4aa23a] pl-5 sm:pl-8">
+              <h1 className="max-w-4xl text-balance text-[clamp(2.95rem,12vw,5rem)] font-semibold leading-[0.93] text-white drop-shadow-sm sm:text-7xl lg:text-8xl">
+                <span className="whitespace-nowrap">Consume Less.</span>
                 <br />
                 Live More.
               </h1>
@@ -83,7 +103,7 @@ export default function Home() {
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="#signup"
-                  className="inline-flex min-h-12 items-center justify-center rounded-sm bg-white px-6 text-base font-semibold text-[#061f34] shadow-sm transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
+                  className="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#4aa23a] px-6 text-base font-semibold text-white shadow-sm transition hover:bg-[#3f8d32] focus:outline-none focus:ring-2 focus:ring-[#4aa23a] focus:ring-offset-2 focus:ring-offset-[#061f34]"
                 >
                   Start the 7-Day Consumption Diet
                 </a>
@@ -98,17 +118,17 @@ export default function Home() {
           </div>
 
           <div className="absolute inset-x-0 bottom-0 bg-[#061f34]/90 text-white backdrop-blur-md">
-            <div className="mx-auto flex max-w-6xl justify-between gap-8 overflow-x-auto px-6 sm:px-8 lg:px-10">
+            <div className="mx-auto grid max-w-6xl grid-cols-4 gap-x-2 gap-y-4 px-4 py-4 sm:flex sm:justify-between sm:gap-8 sm:px-8 sm:py-0 lg:px-10">
               {heroCategories.map(({ icon: Icon, label, tone }) => (
                 <div
-                  className="flex min-w-max items-center justify-center gap-3 py-4 text-sm font-semibold uppercase tracking-[0.16em] sm:py-5 lg:flex-1"
+                  className="flex min-w-0 flex-col items-center justify-center gap-2 text-center text-[0.65rem] font-semibold uppercase tracking-[0.12em] sm:min-w-max sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em] lg:flex-1"
                   key={label}
                 >
                   <span
                     className={
                       tone === "more"
-                        ? "flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#4aa23a] text-[#4aa23a]"
-                        : "flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#ef2d2d] text-[#ef2d2d]"
+                        ? "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#4aa23a] text-[#4aa23a]"
+                        : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#ef2d2d] text-[#ef2d2d]"
                     }
                   >
                     <Icon aria-hidden="true" size={22} strokeWidth={2.2} />
