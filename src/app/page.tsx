@@ -1,3 +1,12 @@
+import {
+  Dumbbell,
+  Goal,
+  MonitorPlay,
+  Smartphone,
+  Utensils,
+  Users,
+  Wine,
+} from "lucide-react";
 import Image from "next/image";
 import { ChallengeSignupForm } from "@/components/challenge-signup-form";
 import { challengeDays } from "@/lib/challenge";
@@ -10,6 +19,16 @@ const consumptionAreas = [
   { label: "sugar and junk food", tone: "less" },
   { label: "unnecessary buying", tone: "less" },
   { label: "mental noise", tone: "more" },
+];
+
+const heroCategories = [
+  { label: "Purpose", icon: Goal, tone: "more" },
+  { label: "Health", icon: Dumbbell, tone: "more" },
+  { label: "Relationships", icon: Users, tone: "more" },
+  { label: "Food", icon: Utensils, tone: "less" },
+  { label: "Alcohol", icon: Wine, tone: "less" },
+  { label: "Media", icon: MonitorPlay, tone: "less" },
+  { label: "Tech", icon: Smartphone, tone: "less" },
 ];
 
 export default function Home() {
@@ -76,18 +95,25 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 hidden border-t border-white/20 bg-[#061f34]/35 text-white/85 backdrop-blur-sm lg:block">
-            <div className="mx-auto grid max-w-6xl grid-cols-4 gap-px px-10">
-              {["No TV", "No Social Media", "No News", "One Hour of Silence"].map(
-                (item) => (
-                  <div
-                    className="py-5 text-sm font-semibold uppercase tracking-[0.16em]"
-                    key={item}
+          <div className="absolute inset-x-0 bottom-0 border-t border-white/15 bg-black/45 text-white backdrop-blur-md">
+            <div className="mx-auto flex max-w-6xl overflow-x-auto px-6 sm:px-8 lg:px-10">
+              {heroCategories.map(({ icon: Icon, label, tone }) => (
+                <div
+                  className="flex min-w-max items-center gap-3 border-r border-white/20 py-4 pr-7 text-sm font-semibold uppercase tracking-[0.16em] first:pl-0 last:border-r-0 last:pr-0 sm:py-5 sm:pr-9"
+                  key={label}
+                >
+                  <span
+                    className={
+                      tone === "more"
+                        ? "flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#4aa23a] text-[#4aa23a]"
+                        : "flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#ef2d2d] text-[#ef2d2d]"
+                    }
                   >
-                    {item}
-                  </div>
-                ),
-              )}
+                    <Icon aria-hidden="true" size={22} strokeWidth={2.2} />
+                  </span>
+                  <span className="text-white/90">{label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
