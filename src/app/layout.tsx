@@ -36,27 +36,21 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="flex min-h-full flex-col antialiased">
         {children}
-        <footer className="border-t border-white/10 bg-[#061f34] px-6 py-10 text-white/70 sm:px-8 lg:px-10">
+        <footer className="border-t border-[#dbe4ea] bg-white px-6 py-10 text-[#061f34]/70 sm:px-8 lg:px-10">
           <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex items-center gap-4">
+            <div>
               <Image
-                alt=""
-                aria-hidden="true"
-                className="h-12 w-12 rounded-full object-cover"
-                height={96}
-                src="/brand/consumption-diet-mark.png"
-                width={96}
+                alt="Consumption Diet"
+                className="h-auto w-48"
+                height={620}
+                src="/brand/consumption-diet-logo-cropped.png"
+                width={860}
               />
-              <div>
-                <p className="text-lg font-semibold text-white">
-                  Consumption Diet
-                </p>
-                <p className="mt-2 text-sm">Consume Less. Live Better.</p>
-              </div>
+              <p className="mt-3 text-sm">Consume Less. Live Better.</p>
             </div>
             <div className="text-sm sm:text-right">
               <a
-                className="underline-offset-4 hover:text-white hover:underline"
+                className="underline-offset-4 hover:text-[#061f34] hover:underline"
                 href="mailto:hello@consumptiondiet.com"
               >
                 hello@consumptiondiet.com

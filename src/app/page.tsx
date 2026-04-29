@@ -18,18 +18,15 @@ export default function Home() {
       <section className="bg-white text-[#061f34]">
         <div className="border-b border-[#dbe4ea]">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 sm:px-8 lg:px-10">
-            <a className="flex items-center gap-3" href="#">
+            <a className="block" href="#" aria-label="Consumption Diet home">
               <Image
-                alt=""
-                aria-hidden="true"
-                className="h-8 w-8 rounded-full object-cover"
-                height={80}
-                src="/brand/consumption-diet-mark.png"
-                width={80}
+                alt="Consumption Diet"
+                className="h-auto w-40 sm:w-52"
+                height={620}
+                priority
+                src="/brand/consumption-diet-logo-cropped.png"
+                width={860}
               />
-              <span className="text-sm font-semibold uppercase tracking-[0.2em]">
-                Consumption Diet
-              </span>
             </a>
             <a
               className="hidden text-sm font-semibold uppercase tracking-[0.16em] text-[#061f34]/70 transition hover:text-[#061f34] sm:inline"
@@ -69,32 +66,14 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <div className="mx-auto max-w-md border border-[#dbe4ea] bg-[#f7fafb] p-8 sm:p-10">
-              <div className="flex items-center justify-center gap-5 text-5xl font-semibold sm:text-6xl">
-                <span className="text-[#ef2d2d]">-</span>
-                <span className="text-[#061f34]">=</span>
-                <span className="text-[#4aa23a]">+</span>
-              </div>
-              <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden bg-[#dbe4ea] text-sm font-semibold uppercase tracking-[0.14em]">
-                <div className="bg-white px-4 py-4 text-[#ef2d2d]">Less</div>
-                <div className="bg-white px-4 py-4 text-[#4aa23a]">More</div>
-                <div className="bg-white px-4 py-4 text-[#061f34]/70">
-                  Noise
-                </div>
-                <div className="bg-white px-4 py-4 text-[#061f34]/70">
-                  Purpose
-                </div>
-                <div className="bg-white px-4 py-4 text-[#061f34]/70">
-                  Excess
-                </div>
-                <div className="bg-white px-4 py-4 text-[#061f34]/70">
-                  Clarity
-                </div>
-              </div>
-              <p className="mt-8 text-center text-sm font-semibold uppercase tracking-[0.18em] text-[#061f34]">
-                Less is more
-              </p>
-            </div>
+            <Image
+              alt="Consumption Diet logo"
+              className="mx-auto h-auto w-full max-w-xl"
+              height={620}
+              priority
+              src="/brand/consumption-diet-logo-cropped.png"
+              width={860}
+            />
           </div>
         </div>
       </section>
