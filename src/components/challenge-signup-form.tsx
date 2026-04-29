@@ -43,19 +43,19 @@ export function ChallengeSignupForm() {
 
   return (
     <form
-      className="border border-stone-200 bg-white p-6 shadow-sm sm:p-8"
+      className="border border-[#dbe4ea] bg-white p-6 shadow-sm sm:p-8"
       onSubmit={handleSubmit}
     >
       <div className="grid gap-5">
         <div>
           <label
-            className="block text-sm font-semibold text-stone-800"
+            className="block text-sm font-semibold text-[#061f34]"
             htmlFor="firstName"
           >
             First name
           </label>
           <input
-            className="mt-2 min-h-12 w-full rounded-sm border border-stone-300 bg-white px-4 text-base text-stone-950 outline-none transition placeholder:text-stone-400 focus:border-stone-950 focus:ring-2 focus:ring-stone-950/10"
+            className="mt-2 min-h-12 w-full rounded-sm border border-[#cfdbe3] bg-white px-4 text-base text-[#061f34] outline-none transition placeholder:text-stone-400 focus:border-[#061f34] focus:ring-2 focus:ring-[#061f34]/10"
             id="firstName"
             name="firstName"
             onChange={(event) => setFirstName(event.target.value)}
@@ -67,13 +67,13 @@ export function ChallengeSignupForm() {
         </div>
         <div>
           <label
-            className="block text-sm font-semibold text-stone-800"
+            className="block text-sm font-semibold text-[#061f34]"
             htmlFor="email"
           >
             Email
           </label>
           <input
-            className="mt-2 min-h-12 w-full rounded-sm border border-stone-300 bg-white px-4 text-base text-stone-950 outline-none transition placeholder:text-stone-400 focus:border-stone-950 focus:ring-2 focus:ring-stone-950/10"
+            className="mt-2 min-h-12 w-full rounded-sm border border-[#cfdbe3] bg-white px-4 text-base text-[#061f34] outline-none transition placeholder:text-stone-400 focus:border-[#061f34] focus:ring-2 focus:ring-[#061f34]/10"
             id="email"
             name="email"
             onChange={(event) => setEmail(event.target.value)}
@@ -86,7 +86,7 @@ export function ChallengeSignupForm() {
       </div>
 
       <button
-        className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-sm bg-stone-950 px-6 text-base font-semibold text-white transition hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-stone-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-stone-400"
+        className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-sm bg-[#061f34] px-6 text-base font-semibold text-white transition hover:bg-[#0a304e] focus:outline-none focus:ring-2 focus:ring-[#061f34] focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-stone-400"
         disabled={formState === "loading"}
         type="submit"
       >
@@ -98,8 +98,8 @@ export function ChallengeSignupForm() {
           <p
             className={
               formState === "error"
-                ? "text-sm font-medium text-red-700"
-                : "text-sm font-medium text-stone-700"
+                ? "text-sm font-medium text-[#ef2d2d]"
+                : "text-sm font-medium text-[#061f34]"
             }
           >
             {message}

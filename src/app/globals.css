@@ -2,7 +2,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1c1917;
+  --foreground: #061f34;
+  --brand-navy: #061f34;
+  --brand-red: #ef2d2d;
+  --brand-green: #4aa23a;
+  --brand-ice: #f7fafb;
 }
 
 @theme inline {
@@ -23,6 +27,6 @@ body {
 }
 
 ::selection {
-  background: #a36f42;
+  background: var(--brand-red);
   color: #ffffff;
 }
