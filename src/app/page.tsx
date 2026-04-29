@@ -31,15 +31,15 @@ export default function Home() {
       <section className="bg-[#061f34] text-[#061f34]">
         <div className="relative min-h-screen overflow-hidden">
           <Image
-            alt="Open road through a quiet desert landscape"
-            className="absolute inset-0 h-full w-full object-cover object-[58%_55%]"
+            alt="Smiling hiker standing in a quiet field after an outdoor activity"
+            className="absolute inset-0 h-full w-full object-cover object-[61%_50%] sm:object-[64%_50%]"
             fill
             priority
             sizes="100vw"
-            src="/brand/hero-quiet-landscape.jpg"
+            src="/brand/hero-smiling-hiker.jpg"
           />
-          <div className="absolute inset-0 bg-[#061f34]/28" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/88 via-[#061f34]/48 to-transparent" />
+          <div className="absolute inset-0 bg-[#061f34]/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/90 via-[#061f34]/56 to-[#061f34]/12" />
           <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#061f34]/70 to-transparent" />
 
           <div className="absolute left-0 right-0 top-12 z-20 flex justify-center px-6 sm:left-8 sm:right-auto sm:top-8 sm:block sm:px-0 lg:left-10">
