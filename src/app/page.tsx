@@ -77,7 +77,11 @@ export default function Home() {
               <div className="flex flex-wrap justify-center gap-x-4 gap-y-5 sm:flex-nowrap sm:justify-between sm:gap-8">
                 {heroCategories.map(({ icon: Icon, label, mobileLabel, tone }) => (
                   <div
-                    className="flex basis-[28%] flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
+                    className={
+                      tone === "more"
+                        ? "flex shrink-0 basis-[28%] flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
+                        : "flex shrink-0 basis-[20%] flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
+                    }
                     key={label}
                   >
                     <span
