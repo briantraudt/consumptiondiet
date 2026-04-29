@@ -171,8 +171,8 @@ export default function Home() {
           </div>
           <div className="space-y-7 text-lg leading-8 text-stone-700">
             <p>
-              Consumption Diet was started by Brian Traudt after realizing that
-              modern life is not only overfed, but overloaded.
+              Consumption Diet was started after realizing that modern life is
+              not only overfed, but overloaded.
             </p>
             <p>
               After a heart attack, quitting alcohol, job loss, and a season of
