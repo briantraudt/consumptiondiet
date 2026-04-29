@@ -3,7 +3,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 
 type SignupRecord = {
-  firstName: string;
+  firstName?: string;
   email: string;
   createdAt: string;
 };
@@ -27,13 +27,6 @@ export async function POST(request: Request) {
     email?: unknown;
   };
 
-  if (typeof firstName !== "string" || firstName.trim().length < 1) {
-    return NextResponse.json(
-      { message: "First name is required." },
-      { status: 400 },
-    );
-  }
-
   if (typeof email !== "string" || !emailPattern.test(email.trim())) {
     return NextResponse.json(
       { message: "Please enter a valid email address." },
@@ -42,18 +35,19 @@ export async function POST(request: Request) {
   }
 
   const record: SignupRecord = {
-    firstName: firstName.trim(),
     email: email.trim().toLowerCase(),
     createdAt: new Date().toISOString(),
   };
+
+  if (typeof firstName === "string" && firstName.trim().length > 0) {
+    record.firstName = firstName.trim();
+  }
 
   const persisted = await persistSignup(record);
   console.info("Consumption Diet signup", record);
 
   return NextResponse.json({
-    message: persisted
-      ? "You are on the list. The challenge sequence is coming soon."
-      : "You are on the list. Signup was logged for this MVP.",
+    message: "You\u2019re in. Day 1 starts now.",
     persisted,
   });
 }
