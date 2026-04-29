@@ -103,7 +103,7 @@ export default function Home() {
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="#signup"
-                  className="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#4aa23a] px-6 text-base font-semibold text-white shadow-sm transition hover:bg-[#3f8d32] focus:outline-none focus:ring-2 focus:ring-[#4aa23a] focus:ring-offset-2 focus:ring-offset-[#061f34]"
+                  className="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#2f7d24] px-6 text-base font-semibold text-white shadow-sm transition hover:bg-[#25651c] focus:outline-none focus:ring-2 focus:ring-[#2f7d24] focus:ring-offset-2 focus:ring-offset-[#061f34]"
                 >
                   Start the 7-Day Consumption Diet
                 </a>
