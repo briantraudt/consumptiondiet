@@ -2,6 +2,10 @@
 
 Simple MVP website for `consumptiondiet.com` plus a protected 6-day founder project-plan email system.
 
+## Project Principles
+
+The product, design, copy, development, accessibility, and operating standards live in [`PRODUCT_PRINCIPLES.md`](./PRODUCT_PRINCIPLES.md).
+
 ## Run Locally
 
 ```bash
