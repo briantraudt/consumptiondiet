@@ -1,10 +1,10 @@
 import {
+  Crosshair,
   Dumbbell,
-  Goal,
-  MonitorPlay,
   Smartphone,
-  Utensils,
-  Users,
+  SquarePlay,
+  UsersRound,
+  UtensilsCrossed,
   Wine,
 } from "lucide-react";
 import Image from "next/image";
@@ -22,12 +22,12 @@ const consumptionAreas = [
 ];
 
 const heroCategories = [
-  { label: "Purpose", icon: Goal, tone: "more" },
+  { label: "Purpose", icon: Crosshair, tone: "more" },
   { label: "Health", icon: Dumbbell, tone: "more" },
-  { label: "Relationships", icon: Users, tone: "more" },
-  { label: "Food", icon: Utensils, tone: "less" },
+  { label: "Relationships", icon: UsersRound, tone: "more" },
+  { label: "Food", icon: UtensilsCrossed, tone: "less" },
   { label: "Alcohol", icon: Wine, tone: "less" },
-  { label: "Media", icon: MonitorPlay, tone: "less" },
+  { label: "Media", icon: SquarePlay, tone: "less" },
   { label: "Tech", icon: Smartphone, tone: "less" },
 ];
 
@@ -72,10 +72,9 @@ export default function Home() {
           <div className="relative mx-auto flex min-h-[86vh] max-w-6xl items-center px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
             <div className="max-w-3xl border-l-2 border-[#4aa23a] pl-6 sm:pl-8">
               <h1 className="max-w-4xl text-balance text-6xl font-semibold leading-[0.93] text-white drop-shadow-sm sm:text-7xl lg:text-8xl">
-                Consume{" "}
-                <span className="text-[#ef2d2d]">Less.</span>
+                Consume Less.
                 <br />
-                Live <span className="text-[#4aa23a]">More.</span>
+                Live More.
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/90 sm:text-2xl sm:leading-9">
                 A simple challenge to reduce noise, distraction, and excess so
