@@ -5,7 +5,6 @@ import { FormEvent, useState } from "react";
 type FormState = "idle" | "loading" | "success" | "error";
 
 export function ChallengeSignupForm() {
-  const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [formState, setFormState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
@@ -19,7 +18,7 @@ export function ChallengeSignupForm() {
       const response = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, email }),
+        body: JSON.stringify({ email }),
       });
       const result = (await response.json()) as { message?: string };
 
@@ -28,8 +27,7 @@ export function ChallengeSignupForm() {
       }
 
       setFormState("success");
-      setMessage(result.message ?? "You are on the list.");
-      setFirstName("");
+      setMessage(result.message ?? "You\u2019re in. Day 1 starts now.");
       setEmail("");
     } catch (error) {
       setFormState("error");
@@ -42,64 +40,38 @@ export function ChallengeSignupForm() {
   }
 
   return (
-    <form
-      className="border border-[#dbe4ea] bg-white p-6 shadow-sm sm:p-8"
-      onSubmit={handleSubmit}
-    >
-      <div className="grid gap-5">
-        <div>
-          <label
-            className="block text-sm font-semibold text-[#061f34]"
-            htmlFor="firstName"
-          >
-            First name
-          </label>
-          <input
-            className="mt-2 min-h-12 w-full rounded-sm border border-[#cfdbe3] bg-white px-4 text-base text-[#061f34] outline-none transition placeholder:text-stone-400 focus:border-[#061f34] focus:ring-2 focus:ring-[#061f34]/10"
-            id="firstName"
-            name="firstName"
-            onChange={(event) => setFirstName(event.target.value)}
-            placeholder="Brian"
-            required
-            type="text"
-            value={firstName}
-          />
-        </div>
-        <div>
-          <label
-            className="block text-sm font-semibold text-[#061f34]"
-            htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            className="mt-2 min-h-12 w-full rounded-sm border border-[#cfdbe3] bg-white px-4 text-base text-[#061f34] outline-none transition placeholder:text-stone-400 focus:border-[#061f34] focus:ring-2 focus:ring-[#061f34]/10"
-            id="email"
-            name="email"
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="you@example.com"
-            required
-            type="email"
-            value={email}
-          />
-        </div>
-      </div>
+    <form className="grid gap-4" onSubmit={handleSubmit}>
+      <label className="sr-only" htmlFor="email">
+        Email address
+      </label>
+      <input
+        className="min-h-14 w-full rounded-sm bg-white px-5 text-lg font-medium text-[#0B2A44] outline-none transition placeholder:text-stone-400 focus:ring-2 focus:ring-[#2E7D32]"
+        id="email"
+        name="email"
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder="Email address"
+        required
+        type="email"
+        value={email}
+      />
 
       <button
-        className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-sm bg-[#061f34] px-6 text-base font-semibold text-white transition hover:bg-[#0a304e] focus:outline-none focus:ring-2 focus:ring-[#061f34] focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-stone-400"
+        className="inline-flex min-h-14 w-full items-center justify-center rounded-sm bg-[#2E7D32] px-6 text-lg font-bold text-white transition hover:bg-[#276b2b] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#2E7D32] focus:ring-offset-4 focus:ring-offset-black/30 disabled:cursor-not-allowed disabled:bg-stone-500"
         disabled={formState === "loading"}
         type="submit"
       >
-        {formState === "loading" ? "Joining..." : "Join the 7-Day Challenge"}
+        {formState === "loading"
+          ? "Starting..."
+          : "Start the 7-Day Consumption Diet"}
       </button>
 
-      <div aria-live="polite" className="mt-4 min-h-6">
+      <div aria-live="polite" className="min-h-6">
         {message ? (
           <p
             className={
               formState === "error"
-                ? "text-sm font-medium text-[#ef2d2d]"
-                : "text-sm font-medium text-[#061f34]"
+                ? "text-sm font-semibold text-[#ffb4b4]"
+                : "text-sm font-semibold text-white"
             }
           >
             {message}
