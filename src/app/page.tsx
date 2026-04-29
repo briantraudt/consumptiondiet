@@ -21,11 +21,11 @@ export default function Home() {
             <a className="block" href="#" aria-label="Consumption Diet home">
               <Image
                 alt="Consumption Diet"
-                className="h-auto w-40 sm:w-52"
-                height={620}
+                className="h-auto w-56 sm:w-72"
+                height={167}
                 priority
-                src="/brand/consumption-diet-logo-cropped.png"
-                width={860}
+                src="/brand/consumption-diet-logo-horizontal.png"
+                width={1809}
               />
             </a>
             <a
@@ -68,11 +68,11 @@ export default function Home() {
           <div className="relative">
             <Image
               alt="Consumption Diet logo"
-              className="mx-auto h-auto w-full max-w-xl"
-              height={620}
+              className="mx-auto h-auto w-full max-w-2xl"
+              height={167}
               priority
-              src="/brand/consumption-diet-logo-cropped.png"
-              width={860}
+              src="/brand/consumption-diet-logo-horizontal.png"
+              width={1809}
             />
           </div>
         </div>

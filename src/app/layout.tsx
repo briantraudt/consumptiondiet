@@ -41,10 +41,10 @@ export default function RootLayout({
             <div>
               <Image
                 alt="Consumption Diet"
-                className="h-auto w-48"
-                height={620}
-                src="/brand/consumption-diet-logo-cropped.png"
-                width={860}
+                className="h-auto w-64"
+                height={167}
+                src="/brand/consumption-diet-logo-horizontal.png"
+                width={1809}
               />
               <p className="mt-3 text-sm">Consume Less. Live Better.</p>
             </div>
