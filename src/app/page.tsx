@@ -37,43 +37,42 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mx-auto grid min-h-[76vh] max-w-6xl items-center gap-14 px-6 py-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-24">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#4aa23a]">
-              Less noise. More life.
-            </p>
-            <h1 className="mt-6 max-w-4xl text-balance text-6xl font-semibold leading-[0.95] text-[#061f34] sm:text-7xl lg:text-8xl">
-              Consume Less. Live Better.
-            </h1>
-            <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-stone-700 sm:text-2xl sm:leading-9">
-              A simple challenge to reduce noise, distraction, and excess so
-              you can regain clarity, discipline, and purpose.
-            </p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#signup"
-                className="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#061f34] px-6 text-base font-semibold text-white transition hover:bg-[#0a304e] focus:outline-none focus:ring-2 focus:ring-[#061f34] focus:ring-offset-2"
-              >
-                Start the 7-Day Consumption Diet
-              </a>
-              <a
-                href="#story"
-                className="inline-flex min-h-12 items-center justify-center rounded-sm border border-[#cfdbe3] px-6 text-base font-semibold text-[#061f34] transition hover:border-[#061f34] hover:bg-[#f7fafb] focus:outline-none focus:ring-2 focus:ring-[#061f34] focus:ring-offset-2"
-              >
-                Read the story
-              </a>
-            </div>
-          </div>
+        <div className="relative min-h-[82vh] overflow-hidden">
+          <Image
+            alt="Open road through a quiet desert landscape"
+            className="absolute inset-0 h-full w-full object-cover"
+            fill
+            priority
+            sizes="100vw"
+            src="/brand/hero-quiet-landscape.jpg"
+          />
+          <div className="absolute inset-0 bg-[#061f34]/65" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/90 via-[#061f34]/55 to-[#061f34]/10" />
 
-          <div className="relative">
-            <Image
-              alt="Consumption Diet logo"
-              className="mx-auto h-auto w-full max-w-2xl"
-              height={167}
-              priority
-              src="/brand/consumption-diet-logo-horizontal.png"
-              width={1809}
-            />
+          <div className="relative mx-auto flex min-h-[82vh] max-w-6xl items-end px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
+            <div className="max-w-3xl">
+              <h1 className="max-w-4xl text-balance text-6xl font-semibold leading-[0.95] text-white sm:text-7xl lg:text-8xl">
+                Consume Less. Live Better.
+              </h1>
+              <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/85 sm:text-2xl sm:leading-9">
+                A simple challenge to reduce noise, distraction, and excess so
+                you can regain clarity, discipline, and purpose.
+              </p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="#signup"
+                  className="inline-flex min-h-12 items-center justify-center rounded-sm bg-white px-6 text-base font-semibold text-[#061f34] transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
+                >
+                  Start the 7-Day Consumption Diet
+                </a>
+                <a
+                  href="#story"
+                  className="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/60 px-6 text-base font-semibold text-white transition hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
+                >
+                  Read the story
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
