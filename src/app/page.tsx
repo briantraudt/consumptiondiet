@@ -72,7 +72,10 @@ export default function Home() {
           <div className="relative mx-auto flex min-h-[86vh] max-w-6xl items-center px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
             <div className="max-w-3xl border-l-2 border-[#4aa23a] pl-6 sm:pl-8">
               <h1 className="max-w-4xl text-balance text-6xl font-semibold leading-[0.93] text-white drop-shadow-sm sm:text-7xl lg:text-8xl">
-                Consume Less. Live Better.
+                Consume{" "}
+                <span className="text-[#ef2d2d]">Less.</span>
+                <br />
+                Live <span className="text-[#4aa23a]">More.</span>
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/90 sm:text-2xl sm:leading-9">
                 A simple challenge to reduce noise, distraction, and excess so
@@ -95,11 +98,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 border-t border-white/15 bg-black/45 text-white backdrop-blur-md">
-            <div className="mx-auto flex max-w-6xl overflow-x-auto px-6 sm:px-8 lg:px-10">
+          <div className="absolute inset-x-0 bottom-0 bg-[#061f34]/90 text-white backdrop-blur-md">
+            <div className="mx-auto flex max-w-6xl justify-between gap-8 overflow-x-auto px-6 sm:px-8 lg:px-10">
               {heroCategories.map(({ icon: Icon, label, tone }) => (
                 <div
-                  className="flex min-w-max items-center gap-3 border-r border-white/20 py-4 pr-7 text-sm font-semibold uppercase tracking-[0.16em] first:pl-0 last:border-r-0 last:pr-0 sm:py-5 sm:pr-9"
+                  className="flex min-w-max items-center justify-center gap-3 py-4 text-sm font-semibold uppercase tracking-[0.16em] sm:py-5 lg:flex-1"
                   key={label}
                 >
                   <span
