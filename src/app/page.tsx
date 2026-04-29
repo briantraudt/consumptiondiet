@@ -37,31 +37,32 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative min-h-[82vh] overflow-hidden">
+        <div className="relative min-h-[86vh] overflow-hidden">
           <Image
             alt="Open road through a quiet desert landscape"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-[58%_55%]"
             fill
             priority
             sizes="100vw"
             src="/brand/hero-quiet-landscape.jpg"
           />
-          <div className="absolute inset-0 bg-[#061f34]/65" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/90 via-[#061f34]/55 to-[#061f34]/10" />
+          <div className="absolute inset-0 bg-[#061f34]/28" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/88 via-[#061f34]/48 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#061f34]/70 to-transparent" />
 
-          <div className="relative mx-auto flex min-h-[82vh] max-w-6xl items-end px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
-            <div className="max-w-3xl">
-              <h1 className="max-w-4xl text-balance text-6xl font-semibold leading-[0.95] text-white sm:text-7xl lg:text-8xl">
+          <div className="relative mx-auto flex min-h-[86vh] max-w-6xl items-center px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
+            <div className="max-w-3xl border-l-2 border-[#4aa23a] pl-6 sm:pl-8">
+              <h1 className="max-w-4xl text-balance text-6xl font-semibold leading-[0.93] text-white drop-shadow-sm sm:text-7xl lg:text-8xl">
                 Consume Less. Live Better.
               </h1>
-              <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/85 sm:text-2xl sm:leading-9">
+              <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/90 sm:text-2xl sm:leading-9">
                 A simple challenge to reduce noise, distraction, and excess so
                 you can regain clarity, discipline, and purpose.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="#signup"
-                  className="inline-flex min-h-12 items-center justify-center rounded-sm bg-white px-6 text-base font-semibold text-[#061f34] transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
+                  className="inline-flex min-h-12 items-center justify-center rounded-sm bg-white px-6 text-base font-semibold text-[#061f34] shadow-sm transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#061f34]"
                 >
                   Start the 7-Day Consumption Diet
                 </a>
@@ -72,6 +73,21 @@ export default function Home() {
                   Read the story
                 </a>
               </div>
+            </div>
+          </div>
+
+          <div className="absolute inset-x-0 bottom-0 hidden border-t border-white/20 bg-[#061f34]/35 text-white/85 backdrop-blur-sm lg:block">
+            <div className="mx-auto grid max-w-6xl grid-cols-4 gap-px px-10">
+              {["No TV", "No Social Media", "No News", "One Hour of Silence"].map(
+                (item) => (
+                  <div
+                    className="py-5 text-sm font-semibold uppercase tracking-[0.16em]"
+                    key={item}
+                  >
+                    {item}
+                  </div>
+                ),
+              )}
             </div>
           </div>
         </div>
