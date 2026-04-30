@@ -32,7 +32,7 @@ export default function Home() {
         <div className="relative min-h-screen overflow-hidden">
           <Image
             alt="Smiling hiker standing in a quiet field after an outdoor activity"
-            className="absolute inset-0 h-full w-full object-cover object-[61%_50%] sm:object-[64%_50%]"
+            className="absolute inset-0 h-full w-full object-cover object-center sm:object-[64%_50%]"
             fill
             priority
             sizes="100vw"
