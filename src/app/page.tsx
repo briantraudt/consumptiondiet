@@ -15,7 +15,7 @@ const heroCategories = [
   { label: "Health", mobileLabel: "Health", icon: Dumbbell, tone: "more" },
   {
     label: "Relationships",
-    mobileLabel: "Relations",
+    mobileLabel: "Relationships",
     icon: UsersRound,
     tone: "more",
   },
@@ -79,15 +79,15 @@ export default function Home() {
                   <div
                     className={
                       tone === "more"
-                        ? "flex shrink-0 basis-[28%] flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
-                        : "flex shrink-0 basis-[20%] flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
+                        ? "flex shrink-0 basis-[28%] flex-col items-center justify-center gap-2 text-center text-[0.6rem] font-semibold uppercase tracking-[0.06em] sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
+                        : "hidden shrink-0 basis-[20%] flex-col items-center justify-center gap-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] sm:flex sm:min-w-max sm:basis-auto sm:flex-1 sm:flex-row sm:gap-3 sm:py-5 sm:text-sm sm:tracking-[0.16em]"
                     }
                     key={label}
                   >
                     <span
                       className={
                         tone === "more"
-                          ? "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#4aa23a] text-[#4aa23a] sm:h-10 sm:w-10"
+                          ? "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-white text-white sm:h-10 sm:w-10 sm:border-[#4aa23a] sm:text-[#4aa23a]"
                           : "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#ef2d2d] text-[#ef2d2d] sm:h-10 sm:w-10"
                       }
                     >
