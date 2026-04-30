@@ -53,8 +53,8 @@ export default function Home() {
                 Live More.
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/90 sm:text-2xl sm:leading-9">
-                A simple challenge to reduce noise, distraction, and excess so
-                you can regain clarity, discipline, and purpose.
+                Get one clear daily prompt to cut the noise, curb the excess,
+                and make more room for clarity, discipline, and purpose.
               </p>
               <div className="mt-10 max-w-xl">
                 <ChallengeSignupForm />
