@@ -299,7 +299,11 @@ async function latestEnrollment(userId: string): Promise<EnrollmentRow | null> {
   return ((data ?? [])[0] as EnrollmentRow | undefined) ?? null;
 }
 
-/** Which day a Y/N reply counts for: the last evening check-in we asked about. */
+/**
+ * Which day a Y/N reply counts for: the last evening check-in we asked about,
+ * if it hasn't been answered yet. Otherwise a "no" is just conversation and
+ * goes to the coach.
+ */
 async function checkInDate(e: EnrollmentRow, localDate: string): Promise<string | null> {
   const { data } = await db()
     .from("scheduled_sends")
@@ -309,10 +313,14 @@ async function checkInDate(e: EnrollmentRow, localDate: string): Promise<string 
     .order("send_date", { ascending: false })
     .limit(1);
   const lastAsked = data?.[0]?.send_date as string | undefined;
-  if (lastAsked && diffDays(localDate, lastAsked) <= 1) return lastAsked;
+  if (!lastAsked || diffDays(localDate, lastAsked) > 1) return null;
 
-  const day = dayNumber(e.start_date, localDate);
-  return day >= 1 && day <= CHALLENGE_DAYS ? localDate : null;
+  const { count } = await db()
+    .from("check_ins")
+    .select("id", { count: "exact", head: true })
+    .eq("enrollment_id", e.id)
+    .eq("day", lastAsked);
+  return (count ?? 0) === 0 ? lastAsked : null;
 }
 
 async function recordCheckIn(e: EnrollmentRow, date: string, won: boolean): Promise<void> {
