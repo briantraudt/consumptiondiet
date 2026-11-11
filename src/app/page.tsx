@@ -4,7 +4,7 @@ import {
   UsersRound,
 } from "lucide-react";
 import Image from "next/image";
-import { ChallengeSignupForm } from "@/components/challenge-signup-form";
+import Link from "next/link";
 
 const heroCategories = [
   { label: "Purpose", icon: Crosshair },
@@ -53,11 +53,16 @@ export default function Home() {
                 Live More.
               </h1>
               <p className="mt-8 max-w-2xl text-pretty text-xl leading-8 text-white/90 sm:text-2xl sm:leading-9">
-                Get one clear daily prompt to cut the noise, curb the excess,
-                and make more room for clarity, discipline, and purpose.
+                Quit one habit in 30 days. A text each morning, a check-in
+                each night, and a coach by text when it gets hard.
               </p>
-              <div className="mt-10 max-w-xl">
-                <ChallengeSignupForm />
+              <div className="mt-10">
+                <Link
+                  className="inline-flex min-h-14 items-center justify-center rounded-sm bg-[#2f7d24] px-8 text-lg font-semibold text-white shadow-sm transition hover:bg-[#25651c] focus:outline-none focus:ring-2 focus:ring-[#4aa23a] focus:ring-offset-2 focus:ring-offset-[#061f34]"
+                  href="/start"
+                >
+                  Start your 30 days
+                </Link>
               </div>
             </div>
           </div>

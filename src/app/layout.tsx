@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Consumption Diet | Consume Less. Live Better.",
   description:
-    "A simple challenge to reduce noise, distraction, and excess so you can regain clarity, discipline, and purpose.",
+    "Quit one habit in 30 days. A text each morning, a check-in each night, and a coach by text when it gets hard.",
   metadataBase: new URL("https://consumptiondiet.com"),
   openGraph: {
     title: "Consumption Diet",

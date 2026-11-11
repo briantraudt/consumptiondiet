@@ -1,109 +1,77 @@
 # Consumption Diet
 
-Simple MVP website for `consumptiondiet.com` plus a protected 6-day founder project-plan email system.
+A 30-day challenge to quit one habit, delivered by text message. No app.
 
-## Project Principles
+The product, design, copy, and development standards live in [`PRODUCT_PRINCIPLES.md`](./PRODUCT_PRINCIPLES.md).
 
-The product, design, copy, development, accessibility, and operating standards live in [`PRODUCT_PRINCIPLES.md`](./PRODUCT_PRINCIPLES.md).
+## How it works
 
-## Run Locally
+1. **Sign up** at `/start`: pick a habit (10 plus a typed "Other"), answer safety questions if the habit has them, choose a start date and text times, optionally add an accountability partner, agree to texts.
+2. **Pay** through Stripe Checkout. The habit is never sent to Stripe.
+3. **Each morning**: a text with that day's prompt and a link to the daily video (`/watch`).
+4. **Each evening**: "Did you win today? Reply Y or N."
+5. **Any other reply** goes to the AI coach, which answers with one thing to do in the next 10 minutes.
+6. **Sunday**: a summary of days won. A partner who said YES gets one too.
+7. **Day 31**: a wrap-up text with a shareable result page (`/r/<token>`), which never shows the habit.
+
+## The pieces
+
+| Piece | Where |
+|---|---|
+| Signup and checkout | `src/app/start`, `src/app/api/enroll` |
+| Payment confirmed, welcome text, partner invite | `src/app/api/stripe/webhook` |
+| Incoming texts (check-ins, coach, STOP, partner YES) | `src/app/api/twilio/inbound` |
+| Scheduler, called every 15 minutes | `src/app/api/cron/tick` |
+| All three engines | `src/lib/engine.ts` |
+| When each text is due (pure logic) | `src/lib/schedule.ts` |
+| Habits, screening questions, typed-habit rules | `src/lib/habits.ts`, `src/lib/custom-habit.ts` |
+| Coach prompt and limits | `src/lib/coach.ts` |
+| Every fixed text we send | `src/lib/texts.ts` |
+| Daily video and numbers | `/admin` |
+| Database schema | `supabase/migrations` |
+
+Daily prompts live in the `prompts` table (`habit_slug`, `day_number`, `body`), so they can be rewritten without a deploy. A habit/day with no prompt of its own falls back to the general track stored under `other`. `{habit}` in a prompt is replaced with the user's habit.
+
+## Safety rules built in
+
+- Alcohol, gambling, and weed ask screening questions at signup. Answers that suggest physical dependence or crisis get a helpline and no charge. Answers are not stored.
+- A typed "Other" habit is checked against fixed rules first (drugs, medication, food restriction, self-harm are referred out), then by a model.
+- Incoming texts are checked for crisis and medical red-flag wording before the coach sees them. A match gets a fixed message with 988 / 911 and never reaches the model.
+- Nothing is texted to anyone before payment. Partners get one invite and nothing more unless they reply YES.
+- Every send is claimed in `scheduled_sends` first, so a text can't go out twice. A text more than 3 hours late is skipped.
+
+## Run locally
 
 ```bash
 npm install
+cp .env.example .env.local   # then fill it in
 npm run dev
 ```
 
-Open `http://localhost:3000`.
-
-## Environment Variables
-
-Copy `.env.example` to `.env.local` and fill in:
+## Checks
 
 ```bash
-RESEND_API_KEY=
-FOUNDER_EMAIL=brian@example.com
-FROM_EMAIL="Consumption Diet <hello@consumptiondiet.com>"
-CRON_SECRET=replace-with-a-long-random-secret
-PROJECT_PLAN_START_DATE=2026-04-29
-```
-
-Notes:
-
-- `RESEND_API_KEY`: server-side key from Resend or the Vercel Resend Marketplace integration.
-- `FOUNDER_EMAIL`: Brian's recipient email for the internal 6-day execution plan.
-- `FROM_EMAIL`: verified Resend sender, ideally something like `Consumption Diet <hello@consumptiondiet.com>`.
-- `CRON_SECRET`: long random string used in the `Authorization` header.
-- `PROJECT_PLAN_START_DATE`: day 1 date in `YYYY-MM-DD`, interpreted as an America/Chicago calendar date.
-
-## Vercel Cron
-
-The cron route is:
-
-```txt
-GET /api/cron/send-project-plan
-```
-
-It is protected by:
-
-```txt
-Authorization: Bearer $CRON_SECRET
-```
-
-`vercel.json` schedules it for:
-
-```txt
-0 12 * * *
-```
-
-Vercel Cron uses UTC. `12:00 UTC` is `7:00 AM America/Chicago` during daylight saving time. During standard time, `7:00 AM America/Chicago` is `13:00 UTC`, so update the schedule to `0 13 * * *` if exact winter timing matters.
-
-## Manual Cron Test
-
-With the dev server running:
-
-```bash
-curl -i http://localhost:3000/api/cron/send-project-plan \
-  -H "Authorization: Bearer $CRON_SECRET"
-```
-
-Expected behavior:
-
-- Before `PROJECT_PLAN_START_DATE`: returns a skipped response.
-- Day 1 through Day 6: sends the matching email through Resend.
-- After Day 6: returns a skipped response.
-
-## Signup Storage
-
-The public challenge form posts to:
-
-```txt
-POST /api/signup
-```
-
-For the MVP, submissions are appended to `data/signups.json` when the filesystem is writable and are also logged. On Vercel, local file writes are not durable, so replace this with Supabase, Vercel Postgres, or another persistent store before relying on signup data.
-
-## Deploy to Vercel
-
-1. Push this project to GitHub.
-2. Import the project in Vercel.
-3. Add the environment variables above in Vercel Project Settings.
-4. Add and verify the `consumptiondiet.com` domain.
-5. Configure DNS records as instructed by Vercel.
-6. Deploy to production.
-7. Confirm the production cron appears under Vercel Cron Jobs.
-
-## Scripts
-
-```bash
-npm run dev
-npm run build
-npm run start
+npm test        # unit tests (schedule, inbound parsing, screening, signatures)
 npm run lint
+npm run build
 ```
 
-## MVP Limitations
+## Environment variables
 
-- Public subscriber email automation is not built yet.
-- Signup storage is a local JSON placeholder/log, not durable production storage.
-- The About essay link is represented by the homepage story section until a Substack or essay URL exists.
-- Vercel Cron runs only on production deployments.
+See `.env.example`. All secrets are server-only.
+
+## Webhooks to register
+
+- **Stripe**: `POST https://www.consumptiondiet.com/api/stripe/webhook`, events `checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+- **Twilio**: on the messaging service or number, incoming messages `POST https://www.consumptiondiet.com/api/twilio/inbound`. `APP_URL` must match the URL Twilio calls exactly, or signature checks fail.
+
+## Scheduler
+
+`GET /api/cron/tick` with `Authorization: Bearer $CRON_SECRET`, every 15 minutes. It is not in `vercel.json` yet: Vercel's Hobby plan only allows daily crons and rejects the deploy otherwise. Either add `{"path": "/api/cron/tick", "schedule": "*/15 * * * *"}` on a Pro plan, or call it from Supabase `pg_cron`.
+
+## Not built yet
+
+- Habit-specific prompts for the 10 habits (the general track covers every habit until then).
+- The $9/month continuation after day 30.
+- Money and time saved in the Sunday summary.
+- Admin view of conversations.
