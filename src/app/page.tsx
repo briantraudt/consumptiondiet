@@ -22,13 +22,13 @@ export default function Home() {
         <div className="relative min-h-screen overflow-hidden">
           <Image
             alt="A man sitting on a porch with a cup, looking out at green trees"
-            className="absolute inset-0 h-full w-full object-cover object-[72%_38%]"
+            className="absolute inset-0 h-full w-full object-cover object-[22%_38%] sm:object-[72%_30%]"
             fill
             priority
             sizes="100vw"
             src="https://images.unsplash.com/photo-1688818274551-de0b66ab6bc2?w=2400&q=80&auto=format&fit=crop"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/92 via-[#061f34]/55 to-[#061f34]/5" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/88 via-[#061f34]/45 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#061f34]/70 to-transparent" />
 
           <div className="absolute left-0 right-0 top-12 z-20 flex justify-center px-6 sm:left-8 sm:right-auto sm:top-8 sm:block sm:px-0 lg:left-10">
@@ -46,7 +46,7 @@ export default function Home() {
 
           <div className="relative mx-auto flex min-h-screen max-w-6xl items-center px-6 pb-52 pt-28 sm:px-8 sm:pb-36 lg:px-10 lg:py-24">
             <div className="max-w-3xl border-l-2 border-[#4aa23a] pl-5 sm:pl-8">
-              <h1 className="max-w-4xl text-balance text-[clamp(2.9rem,12vw,5rem)] font-semibold leading-[0.93] text-white drop-shadow-sm sm:text-7xl lg:text-8xl">
+              <h1 className="max-w-4xl text-balance text-[clamp(2.6rem,11vw,5rem)] font-semibold leading-[0.93] text-white drop-shadow-sm sm:text-6xl lg:text-7xl">
                 <span className="whitespace-nowrap">Consume Less.</span>
                 <br />
                 Live More.
