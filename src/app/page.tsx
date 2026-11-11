@@ -21,15 +21,14 @@ export default function Home() {
       <section className="bg-[#061f34] text-[#061f34]">
         <div className="relative min-h-screen overflow-hidden">
           <Image
-            alt="Black-and-white poolside view of palm trees beside the ocean"
-            className="absolute inset-0 h-full w-full object-cover object-[center_45%]"
+            alt="A man sitting on a porch with a cup, looking out at green trees"
+            className="absolute inset-0 h-full w-full object-cover object-[72%_38%]"
             fill
             priority
             sizes="100vw"
-            src="/brand/hero-pool-palms.jpg"
+            src="https://images.unsplash.com/photo-1688818274551-de0b66ab6bc2?w=2400&q=80&auto=format&fit=crop"
           />
-          <div className="absolute inset-0 bg-[#061f34]/12" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/96 via-[#061f34]/64 to-[#061f34]/14" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#061f34]/92 via-[#061f34]/55 to-[#061f34]/5" />
           <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#061f34]/70 to-transparent" />
 
           <div className="absolute left-0 right-0 top-12 z-20 flex justify-center px-6 sm:left-8 sm:right-auto sm:top-8 sm:block sm:px-0 lg:left-10">
