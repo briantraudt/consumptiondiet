@@ -1,6 +1,6 @@
 import { after } from "next/server";
 import { appUrl } from "@/lib/config";
-import { handleInbound } from "@/lib/engine";
+import { handleInbound } from "@/lib/conversation";
 import { isValidTwilioSignature } from "@/lib/twilio";
 
 export const maxDuration = 60;

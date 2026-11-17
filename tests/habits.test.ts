@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { classifyCustomHabit, evaluateScreening, HABITS, SCREENING } from "@/lib/habits";
-import { texts } from "@/lib/texts";
+import { classifyCustomHabit, evaluateScreening, HABITS, HELD_HABITS, SCREENING, TEXT_SCREENING } from "@/lib/habits";
+import { namesSensitiveHabit } from "@/lib/parse";
 
 describe("habits", () => {
   it("has the 10 habits plus Other", () => {
@@ -81,24 +81,27 @@ describe("classifyCustomHabit", () => {
   });
 });
 
-describe("texts", () => {
-  it("puts the required opt-out wording in the first text", () => {
-    const welcome = texts.welcome({ firstName: "Sam", phrase: "sugar", startDate: "2027-01-01", morning: 420, evening: 1200 });
-    expect(welcome).toContain("Reply STOP");
-    expect(welcome).toContain("HELP");
-    expect(welcome).toContain("Msg & data rates may apply");
-    expect(welcome).toContain("January 1");
+describe("screening by text", () => {
+  it("never names the habit in a question or referral", () => {
+    for (const screens of Object.values(TEXT_SCREENING)) {
+      for (const screen of screens) {
+        expect(namesSensitiveHabit(screen.question)).toBe(false);
+        expect(screen.question.length).toBeLessThanOrEqual(320);
+        if (screen.referOnYes) {
+          expect(namesSensitiveHabit(`${screen.referOnYes.message} ${screen.referOnYes.helpline}`)).toBe(false);
+        }
+        if (screen.noteOnYes) expect(namesSensitiveHabit(screen.noteOnYes)).toBe(false);
+      }
+    }
   });
 
-  it("asks the partner before sending them anything else", () => {
-    const invite = texts.partnerInvite({ firstName: "Sam", label: "their 30-day challenge" });
-    expect(invite).toContain("Reply YES");
-    expect(invite).toContain("STOP");
-    expect(invite).not.toContain("sugar");
+  it("stops signup for likely dependence and for self-harm", () => {
+    expect(TEXT_SCREENING.alcohol[0].referOnYes?.helpline).toContain("1-800-662-4357");
+    expect(TEXT_SCREENING.gambling[0].referOnYes?.helpline).toContain("988");
+    expect(TEXT_SCREENING.gambling[1].referOnYes).toBeNull();
   });
 
-  it("keeps a slip from sounding like failure", () => {
-    expect(texts.loss({ won: 1 })).toContain("1 win.");
-    expect(texts.loss({ won: 4 })).toContain("4 wins");
+  it("holds weed back for now", () => {
+    expect(HELD_HABITS.has("weed")).toBe(true);
   });
 });

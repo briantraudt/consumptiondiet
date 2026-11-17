@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { activateEnrollment } from "@/lib/engine";
+import { recordPayment } from "@/lib/engine";
 
 export const maxDuration = 30;
 
@@ -31,11 +31,11 @@ export async function POST(request: Request) {
     if (enrollmentId && session.payment_status === "paid") {
       const customerId = typeof session.customer === "string" ? session.customer : null;
       try {
-        await activateEnrollment(enrollmentId, customerId);
+        await recordPayment(enrollmentId, customerId);
       } catch (err) {
-        console.error("stripe webhook: activation failed", err instanceof Error ? err.message : err);
+        console.error("stripe webhook: recording payment failed", err instanceof Error ? err.message : err);
         // A 500 makes Stripe retry, which is what we want.
-        return NextResponse.json({ message: "Activation failed." }, { status: 500 });
+        return NextResponse.json({ message: "Could not record payment." }, { status: 500 });
       }
     }
   }

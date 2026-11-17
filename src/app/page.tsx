@@ -63,6 +63,9 @@ export default function Home() {
                 >
                   Start your 30 days
                 </Link>
+                <p className="mt-4 text-base font-medium text-white/85">
+                  First 7 days free. No app. No card to start.
+                </p>
               </div>
             </div>
           </div>

@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { db } from "@/lib/db";
 import { CHALLENGE_DAYS } from "@/lib/schedule";
-import { addDays } from "@/lib/time";
 
 export const metadata: Metadata = {
   title: "30 days | Consumption Diet",
@@ -19,22 +18,22 @@ export default async function ResultPage({ params }: { params: Promise<{ token: 
 
   const { data } = await db()
     .from("enrollments")
-    .select("id, start_date, status, users!inner(first_name), check_ins(day, won)")
+    .select("id, start_date, status, users!inner(first_name), check_ins(day_number, won)")
     .eq("result_token", token)
-    .in("status", ["active", "completed", "continuing"])
+    .in("status", ["active", "paused", "completed", "continuing"])
     .limit(1);
   const enrollment = data?.[0];
   if (!enrollment) notFound();
 
   const user = Array.isArray(enrollment.users) ? enrollment.users[0] : enrollment.users;
   const name = (user as { first_name: string | null } | undefined)?.first_name ?? "They";
-  const results = new Map<string, boolean>();
-  for (const c of (enrollment.check_ins ?? []) as Array<{ day: string; won: boolean }>) {
-    results.set(c.day, c.won);
+  const results = new Map<number, boolean>();
+  for (const c of (enrollment.check_ins ?? []) as Array<{ day_number: number | null; won: boolean }>) {
+    if (c.day_number) results.set(c.day_number, c.won);
   }
-  const days = Array.from({ length: CHALLENGE_DAYS }, (_, i) => results.get(addDays(enrollment.start_date, i)));
+  const days = Array.from({ length: CHALLENGE_DAYS }, (_, i) => results.get(i + 1));
   const won = days.filter((d) => d === true).length;
-  const finished = enrollment.status !== "active";
+  const finished = enrollment.status === "completed" || enrollment.status === "continuing";
 
   // The habit is never shown here. This page is meant to be shared.
   return (

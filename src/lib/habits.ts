@@ -21,6 +21,9 @@ export const HABITS: Habit[] = [
   { slug: "other", name: "Other", phrase: "this habit" },
 ];
 
+/** Habits not offered yet. Remove a slug here to switch it on. */
+export const HELD_HABITS = new Set(["weed"]);
+
 export function getHabit(slug: string): Habit | undefined {
   return HABITS.find((h) => h.slug === slug);
 }
@@ -171,3 +174,51 @@ export function classifyCustomHabit(input: string): CustomHabitResult {
   }
   return { outcome: "custom", label };
 }
+
+// ---------------------------------------------------------------- screening by text
+
+export type TextScreen = {
+  /** One Y/N question, worded so it never names the habit. */
+  question: string;
+  /** What to send, and stop signup, when the answer is Y. Null means Y is fine. */
+  referOnYes: { message: string; helpline: string } | null;
+  /** A helpline to add to the next text when the answer is Y but signup continues. */
+  noteOnYes?: string;
+};
+
+export const TEXT_SCREENING: Record<string, TextScreen[]> = {
+  alcohol: [
+    {
+      question:
+        "Quick safety check. Is any of this true: 4 or more a day on most days; shakes, sweats, a racing heart or a seizure when you cut back; or a doctor said not to stop on your own? Reply Y or N.",
+      referOnYes: {
+        message:
+          "Stopping suddenly can be dangerous if your body depends on it. Please talk to a doctor first; they can help you stop safely. We'll be here when you're ready.",
+        helpline: "SAMHSA National Helpline: 1-800-662-4357, free, 24/7.",
+      },
+    },
+  ],
+  gambling: [
+    {
+      question: "Quick safety check, 2 questions. Have you had thoughts of hurting yourself because of it? Reply Y or N.",
+      referOnYes: {
+        message: "What you're carrying is more than a text challenge should handle. You deserve real support right now.",
+        helpline: "Call or text 988, free, 24/7. In an emergency call 911.",
+      },
+    },
+    {
+      question: "Is it putting your rent, bills or food at risk? Reply Y or N.",
+      referOnYes: null,
+      noteOnYes: "A free 24/7 helpline can help with the money side too: 1-800-426-2537.",
+    },
+  ],
+  weed: [
+    {
+      question: "Quick safety check. Do you use it on a doctor's advice for a medical condition? Reply Y or N.",
+      referOnYes: {
+        message: "Please talk to your doctor before you stop. Come back once you have a plan together.",
+        helpline: "",
+      },
+    },
+  ],
+};

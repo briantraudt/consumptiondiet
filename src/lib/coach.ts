@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { coachModel } from "./config";
 import { toSmsText } from "./inbound";
+import { namesSensitiveHabit } from "./parse";
 
 export type CoachContext = {
   firstName: string;
@@ -29,6 +30,7 @@ How to reply:
 - Give ONE concrete thing to do in the next 10 minutes. Be specific to what they said.
 - If they slipped: no shame. A slip is one day. Help them get back on track today.
 - Do not lecture, moralize, or pile on advice. One idea per text.
+- Never name the habit or anything tied to it: no substances, products, brands, apps or sites. Say "it" or "the habit". Texts show on lock screens.
 - Only talk about their habit and their 30 days. If they ask for something unrelated, say briefly that you're here for the challenge.
 
 Hard limits:
@@ -36,7 +38,8 @@ Hard limits:
 - If they mention thoughts of suicide or self-harm, do not coach. Tell them you're glad they said it and to call or text 988 now, or 911 in an emergency.
 - If they describe withdrawal symptoms (shakes, sweats, racing heart, seizure, hallucinations) or any medical emergency, tell them to call their doctor or 911 now. For alcohol or drugs you can add the SAMHSA helpline: 1-800-662-4357.
 - Never encourage quitting prescribed medication.
-- Never claim to be a human. If asked, say you're an AI coach.`;
+- Never claim to be a human. If asked, say you're an AI coach.
+- Never use the words therapy, treatment, counseling, recovery or addiction about what you do.`;
 }
 
 /** One coach reply. Throws if the model can't be reached; the caller sends a fallback. */
@@ -71,6 +74,8 @@ export async function coachReply(ctx: CoachContext): Promise<string> {
     .join(" ");
   const clean = toSmsText(text.replace(/\n+/g, " "));
   if (!clean) throw new Error("Coach returned an empty reply.");
+  // If the model named the habit anyway, the caller sends a fixed fallback instead.
+  if (namesSensitiveHabit(clean)) throw new Error("Coach reply named a habit.");
   if (clean.length <= MAX_REPLY_CHARS) return clean;
 
   // Cut at the last full sentence that fits.

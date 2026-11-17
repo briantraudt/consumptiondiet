@@ -10,7 +10,7 @@ export default function TermsPage() {
   return (
     <PageShell>
       <h1 className="text-4xl font-semibold">Terms</h1>
-      <p className={p}>Last updated November 11, 2026.</p>
+      <p className={p}>Last updated November 17, 2026.</p>
 
       <h2 className={h2}>What this is</h2>
       <p className={p}>
@@ -19,26 +19,28 @@ export default function TermsPage() {
 
       <h2 className={h2}>What this is not</h2>
       <p className={p}>
-        This is not medical care, therapy, counseling, or addiction treatment. The coach is an AI, not a person, and can be wrong. Do not rely on it for medical decisions. If you may be physically dependent on alcohol or drugs, talk to a doctor before you stop. In an emergency call 911. If you are thinking about harming yourself, call or text 988.
+        This is not medical care or mental health care, and it does not diagnose or treat any condition. The coach is an AI, not a person, and it can be wrong. Do not rely on it for medical decisions. If your body may depend on a substance, talk to a doctor before you stop. In an emergency call 911. If you are thinking about harming yourself, call or text 988.
       </p>
 
       <h2 className={h2}>Text messages</h2>
       <p className={p}>
-        By signing up you agree to receive recurring automated text messages from Consumption Diet at the number you give us: about 2 a day for 30 days, plus replies when you text us. Message and data rates may apply. Message frequency varies. Reply STOP at any time to cancel. Reply HELP for help. Carriers are not liable for delayed or undelivered messages.
+        You join by texting BEGIN to our number and replying YES when asked. By replying YES you agree to receive recurring automated text messages from Consumption Diet at that number: about 2 a day for 30 days, plus replies when you text us. Consent is not a condition of any purchase. Message frequency varies. Message and data rates may apply. Reply STOP at any time to cancel. Reply HELP for help, or email hello@consumptiondiet.com. Carriers are not liable for delayed or undelivered messages.
       </p>
 
       <h2 className={h2}>Accountability partners</h2>
       <p className={p}>
-        If you add a partner, you confirm you have their permission to share their number with us. We send them one invitation. They only get updates if they reply YES, and they can reply STOP at any time.
+        If you want a partner, we give you an invitation to forward yourself. We never text someone because another person gave us their number. A partner joins by texting the code from their own phone, gets a short text when you miss a day plus a Sunday summary (about 8 messages a month), and can reply STOP at any time. Partners are never told which habit you chose.
       </p>
 
-      <h2 className={h2}>Payment and refunds</h2>
+      <h2 className={h2}>Price and refunds</h2>
       <p className={p}>
-        The challenge is a single payment for 30 days. It is not a subscription and does not renew. If it isn&apos;t for you, email us within 7 days of your start date and we&apos;ll refund you.
+        Your first 7 days are free, with no card needed. To continue, the full 30 days cost $31, paid once through a secure link we text you. It is not a subscription and does not renew. If you don&apos;t pay, your texts stop and nothing is charged. If you pay and it isn&apos;t for you, email us within 7 days of paying and we&apos;ll refund you.
       </p>
 
       <h2 className={h2}>Who can use it</h2>
-      <p className={p}>You must be 18 or older and have a US mobile number.</p>
+      <p className={p}>
+        You must be 18 or older and have a US mobile number. We ask for your date of birth to confirm your age. Some challenges are for people 21 and older.
+      </p>
 
       <h2 className={h2}>Contact</h2>
       <p className={p}>hello@consumptiondiet.com</p>

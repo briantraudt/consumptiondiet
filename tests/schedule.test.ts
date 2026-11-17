@@ -55,9 +55,19 @@ describe("dueSends", () => {
     expect(kinds("2027-01-01", 7 * 60)).toEqual(["morning"]);
   });
 
-  it("skips a text that is more than 3 hours late", () => {
-    expect(kinds("2027-01-01", 9 * 60 + 59)).toEqual(["morning"]);
-    expect(kinds("2027-01-01", 10 * 60)).toEqual([]);
+  it("skips a text that is more than 2 hours late", () => {
+    expect(kinds("2027-01-01", 8 * 60 + 59)).toEqual(["morning"]);
+    expect(kinds("2027-01-01", 9 * 60)).toEqual([]);
+  });
+
+  it("shifts every day later by the days spent paused", () => {
+    const paused = { ...input, offsetDays: 7 };
+    // Jan 8 would be day 8; after a week off it is day 1 again.
+    expect(dueSends(paused, at("2027-01-08", 7 * 60))).toEqual([
+      { kind: "morning", sendDate: "2027-01-08", dayNumber: 1 },
+    ]);
+    expect(dueSends(paused, at("2027-01-07", 7 * 60))).toEqual([]);
+    expect(dueSends(paused, at("2027-02-07", 7 * 60)).map((d) => d.kind)).toEqual(["complete"]);
   });
 
   it("sends the evening check-in at the chosen time", () => {

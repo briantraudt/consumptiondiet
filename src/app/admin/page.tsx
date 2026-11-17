@@ -33,7 +33,7 @@ export default async function AdminPage() {
   const supabase = db();
 
   const [enrollments, videos, customHabits, yesterdayAsked, yesterdayAnswered] = await Promise.all([
-    supabase.from("enrollments").select("status, habit_slug").neq("status", "pending_payment"),
+    supabase.from("enrollments").select("status, habit_slug, paid_at, pause_reason").neq("status", "pending_payment"),
     supabase.from("videos").select("video_date, youtube_id, title").order("video_date", { ascending: false }).limit(10),
     supabase.from("custom_habit_counts").select("habit, signups").limit(15),
     supabase.from("scheduled_sends").select("id", { count: "exact", head: true }).eq("kind", "evening").eq("send_date", yesterday),
@@ -42,9 +42,11 @@ export default async function AdminPage() {
 
   const rows = enrollments.data ?? [];
   const byStatus = (status: string) => rows.filter((r) => r.status === status).length;
-  const paid = rows.filter((r) => r.status !== "referred_out" && r.status !== "canceled");
+  const signups = rows.filter((r) => r.status !== "referred_out" && r.status !== "canceled");
+  const paid = rows.filter((r) => r.paid_at);
+  const unpaidAfterTrial = rows.filter((r) => r.status === "paused" && r.pause_reason === "unpaid").length;
   const habitCounts = new Map<string, number>();
-  for (const r of paid) habitCounts.set(r.habit_slug, (habitCounts.get(r.habit_slug) ?? 0) + 1);
+  for (const r of signups) habitCounts.set(r.habit_slug, (habitCounts.get(r.habit_slug) ?? 0) + 1);
   const asked = yesterdayAsked.count ?? 0;
   const answered = yesterdayAnswered.count ?? 0;
   const hasToday = (videos.data ?? []).some((v) => v.video_date === today);
@@ -56,9 +58,12 @@ export default async function AdminPage() {
       <section className="mt-8" aria-labelledby="numbers">
         <h2 className="text-xl font-semibold" id="numbers">Numbers</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Stat label="Paid signups" value={paid.length} />
-          <Stat label="Starting soon" value={byStatus("scheduled")} />
+          <Stat label="Signups" value={signups.length} />
+          <Stat label="Paid" value={paid.length} />
           <Stat label="Active now" value={byStatus("active")} />
+          <Stat label="Starting soon" value={byStatus("scheduled")} />
+          <Stat label="Free week ended, not paid" value={unpaidAfterTrial} />
+          <Stat label="Paused" value={byStatus("paused") - unpaidAfterTrial} />
           <Stat label="Finished" value={byStatus("completed")} />
           <Stat label="Check-in rate yesterday" value={asked ? `${Math.round((answered / asked) * 100)}%` : "No data"} />
         </div>
