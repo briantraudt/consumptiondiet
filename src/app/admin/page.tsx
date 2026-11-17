@@ -32,12 +32,13 @@ export default async function AdminPage() {
   const yesterday = addDays(today, -1);
   const supabase = db();
 
-  const [enrollments, videos, customHabits, yesterdayAsked, yesterdayAnswered] = await Promise.all([
+  const [enrollments, videos, customHabits, yesterdayAsked, yesterdayAnswered, waiting] = await Promise.all([
     supabase.from("enrollments").select("status, habit_slug, paid_at, pause_reason").neq("status", "pending_payment"),
     supabase.from("videos").select("video_date, youtube_id, title").order("video_date", { ascending: false }).limit(10),
     supabase.from("custom_habit_counts").select("habit, signups").limit(15),
     supabase.from("scheduled_sends").select("id", { count: "exact", head: true }).eq("kind", "evening").eq("send_date", yesterday),
     supabase.from("check_ins").select("id", { count: "exact", head: true }).eq("day", yesterday),
+    supabase.from("users").select("id", { count: "exact", head: true }).eq("convo_state", "web_pending"),
   ]);
 
   const rows = enrollments.data ?? [];
@@ -58,6 +59,7 @@ export default async function AdminPage() {
       <section className="mt-8" aria-labelledby="numbers">
         <h2 className="text-xl font-semibold" id="numbers">Numbers</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Stat label="On the list, not texted yet" value={waiting.count ?? 0} />
           <Stat label="Signups" value={signups.length} />
           <Stat label="Paid" value={paid.length} />
           <Stat label="Active now" value={byStatus("active")} />

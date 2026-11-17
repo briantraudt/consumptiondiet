@@ -6,9 +6,9 @@ The product, design, copy, and development standards live in [`PRODUCT_PRINCIPLE
 
 ## How it works
 
-Everything happens by text. There is no web signup form.
+After a short web form, everything happens by text.
 
-1. **Join**: text BEGIN to the number (the `/start` page shows it, with a tap-to-text button on phones).
+1. **Join**: fill in first name, mobile number and habit at `/start` (handled by `src/lib/web-signup.ts`), or text BEGIN to the number. The form sends one text; nothing more is sent unless the person replies. Before Twilio is set up, form signups are saved as a waiting list and texted once it is.
 2. **Sign up in about five texts**: the habit in your own words, a safety check for some habits, date of birth plus the current time (which sets the time zone), your morning and evening times, then YES to consent.
 3. **Free week**: the first 7 days need no card. On the evening of day 7 a payment link arrives ($31 once, Stripe Checkout). Unpaid challenges pause on day 8 with their place saved.
 4. **Each morning**: that day's prompt, ending "Reply 1 if you're in." If a video was posted for that day, a link to `/watch`.
@@ -38,7 +38,7 @@ Daily prompts live in the `prompts` table (`habit_slug`, `day_number`, `body`), 
 ## Rules built in
 
 - **No text names a habit.** Carriers filter on those words and texts show on lock screens. `tests/texts.test.ts` checks every fixed text, and a coach reply that names a habit is replaced with a fixed one.
-- **Consent comes from the person's own phone.** They text BEGIN, see the disclosures, and reply YES. Nothing recurring is sent before that.
+- **Consent is confirmed from the person's own phone.** Whether they used the form or texted BEGIN, they see the disclosures and reply YES by text. Nothing recurring is sent before that. Form-triggered first texts are capped per hour.
 - **Partners opt in themselves.** The user forwards an invite; the partner texts `PARTNER <code>` from their own phone. We never text a number someone else supplied.
 - **Age gate.** Date of birth is asked once; under 18 is declined, and the alcohol challenge needs 21. Only the result is stored.
 - **Safety.** Alcohol and gambling ask screening questions by text; answers that suggest dependence or crisis get a helpline and signup stops. Crisis and medical wording in any text gets a fixed 988 / 911 reply and never reaches the model.

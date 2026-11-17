@@ -14,12 +14,12 @@ export default function PrivacyPage() {
 
       <h2 className={h2}>What we collect</h2>
       <p className={p}>
-        Your mobile number, time zone, the habit you chose, your start date and text times, your daily check-ins, and the text messages you send us. If you add a partner we ask for your first name. We ask for your date of birth once to confirm your age; we keep only the result of that check, not the date. Your answers to the safety questions at signup are used once and not stored.
+        Your first name if you give it, your mobile number, time zone, the habit you chose, your start date and text times, your daily check-ins, and the text messages you send us. We ask for your date of birth once to confirm your age; we keep only the result of that check, not the date. Your answers to the safety questions at signup are used once and not stored.
       </p>
 
       <h2 className={h2}>Information about your health</h2>
       <p className={p}>
-        The habit you choose and what you tell the coach can say something about your health. We collect it only to run your challenge, and only after you reply YES to start. We do not sell it, use it for advertising, or share it except with the service providers listed below. You can withdraw your consent and erase it at any time by texting DELETE.
+        The habit you choose and what you tell the coach can say something about your health. We collect it only to run your challenge, and only after you sign up or reply YES to start. We do not sell it, use it for advertising, or share it except with the service providers listed below. You can withdraw your consent and erase it at any time by texting DELETE.
       </p>
 
       <h2 className={h2}>How we use it</h2>

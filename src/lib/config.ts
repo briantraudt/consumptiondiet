@@ -33,3 +33,12 @@ export function requireEnv(name: string): string {
   if (!value) throw new Error(`${name} is not configured.`);
   return value;
 }
+
+/** True once Twilio is set up and texts can actually be sent. */
+export function smsReady(): boolean {
+  return Boolean(
+    process.env.TWILIO_ACCOUNT_SID &&
+      process.env.TWILIO_AUTH_TOKEN &&
+      (process.env.TWILIO_FROM_NUMBER || process.env.TWILIO_MESSAGING_SERVICE_SID),
+  );
+}

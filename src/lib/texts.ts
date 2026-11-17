@@ -15,6 +15,9 @@ export const texts = {
   intro() {
     return "Consumption Diet: quit one habit in 30 days, by text. About 2 msgs/day. Msg & data rates may apply. Reply STOP to cancel, HELP for help. consumptiondiet.com/terms\n\nWhat's the one habit you want to quit? Say it your way.";
   },
+  webIntro(p: { firstName: string }) {
+    return `Consumption Diet: Hi ${p.firstName}, thanks for signing up. About 2 msgs/day. Msg & data rates may apply. Reply STOP to cancel, HELP for help. consumptiondiet.com/terms`;
+  },
   askHabitAgain() {
     return "I didn't catch that. In a few words, what's the one habit you want to quit?";
   },

@@ -79,8 +79,23 @@ async function begin(user: UserRow, now: Date): Promise<void> {
     await sendStatus(e, now);
     return;
   }
+  // They already told us their habit on the website.
+  if (user.convo_state === "web_pending" && (user.convo_data as Onboarding).habit) {
+    await startFromWeb(user);
+    return;
+  }
   await setConvo(user, "ob_habit", {});
   await textPerson(user, "onboarding", texts.intro());
+}
+
+/**
+ * First texts to someone who signed up on the website: the required program
+ * details, then the next question. Nothing more is sent unless they reply.
+ */
+export async function startFromWeb(user: UserRow): Promise<void> {
+  const data = user.convo_data as Onboarding;
+  await textPerson(user, "onboarding", texts.webIntro({ firstName: user.first_name?.trim() || "there" }));
+  await askNext(user, { habit: data.habit, custom: data.custom ?? null, screenIndex: 0 });
 }
 
 /** After the habit is settled, ask whatever comes next. */
@@ -555,6 +570,7 @@ export async function handleInbound(from: string, body: string, sid: string, now
     return;
   }
   switch (user.convo_state) {
+    case "web_pending": return begin(user, now);
     case "ob_habit": return onboardHabit(user, body);
     case "ob_screen": return onboardScreen(user, body);
     case "ob_birth":

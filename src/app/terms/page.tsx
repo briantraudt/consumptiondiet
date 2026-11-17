@@ -24,7 +24,7 @@ export default function TermsPage() {
 
       <h2 className={h2}>Text messages</h2>
       <p className={p}>
-        You join by texting BEGIN to our number and replying YES when asked. By replying YES you agree to receive recurring automated text messages from Consumption Diet at that number: about 2 a day for 30 days, plus replies when you text us. Consent is not a condition of any purchase. Message frequency varies. Message and data rates may apply. Reply STOP at any time to cancel. Reply HELP for help, or email hello@consumptiondiet.com. Carriers are not liable for delayed or undelivered messages.
+        You join by signing up on our website, or by texting BEGIN to our number, and replying YES when asked. By checking the box on our signup form or replying YES you agree to receive recurring automated text messages from Consumption Diet at that number: about 2 a day for 30 days, plus replies when you text us. Consent is not a condition of any purchase. Message frequency varies. Message and data rates may apply. Reply STOP at any time to cancel. Reply HELP for help, or email hello@consumptiondiet.com. Carriers are not liable for delayed or undelivered messages.
       </p>
 
       <h2 className={h2}>Accountability partners</h2>

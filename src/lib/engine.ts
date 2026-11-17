@@ -1,12 +1,13 @@
 // The scheduler tick and what happens when a payment arrives.
 // Incoming texts are handled in conversation.ts.
 
-import { appUrl, FREE_DAYS } from "./config";
+import { appUrl, FREE_DAYS, smsReady } from "./config";
 import {
   activePartner, claim, countCheckIns, displayName, effectiveDay, ENROLLMENT_SELECT, LIVE_STATUSES,
   pauseEnrollment, payUrl, resumeEnrollment, textPartner, textUser, unclaim, type EnrollmentRow,
 } from "./core";
 import { db } from "./db";
+import { WEB_TEXTS_PER_HOUR, webTextsLastHour } from "./web-signup";
 import { CHALLENGE_DAYS, dueSends, inWindow, type DueSend } from "./schedule";
 import { startLabel, texts } from "./texts";
 import { addDays, diffDays, localNow, timeToMinutes, type LocalNow } from "./time";
@@ -221,6 +222,7 @@ export async function runTick(now: Date = new Date()): Promise<TickSummary> {
     }
   }
 
+  await textWaitingWebSignups(now, summary);
   await purgeOldMessages(now, summary);
   return summary;
 }
@@ -271,4 +273,37 @@ export async function recordPayment(
     console.error("payment text failed", { enrollmentId: e.id, message: err instanceof Error ? err.message : err });
   }
   return true;
+}
+
+/**
+ * People who signed up on the website before texting was switched on, or while
+ * the hourly limit was reached. They get their first text during the day.
+ */
+async function textWaitingWebSignups(now: Date, summary: TickSummary): Promise<void> {
+  if (!smsReady()) return;
+  const central = localNow(now, "America/Chicago").minutes;
+  if (central < 10 * 60 || central >= 19 * 60) return;
+
+  try {
+    const room = WEB_TEXTS_PER_HOUR - (await webTextsLastHour(now));
+    if (room <= 0) return;
+    const { data, error } = await db()
+      .from("users")
+      .select("*")
+      .eq("convo_state", "web_pending")
+      .is("sms_opted_out_at", null)
+      .order("created_at", { ascending: true })
+      .limit(Math.min(room, 20));
+    if (error) throw new Error(error.message);
+    // Imported here because conversation.ts imports this file.
+    const { startFromWeb } = await import("./conversation");
+    for (const user of (data ?? []) as EnrollmentRow["users"][]) {
+      await startFromWeb(user);
+      summary.sent += 1;
+    }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("tick: waiting web signups failed", message);
+    summary.errors.push(`web signups: ${message}`);
+  }
 }

@@ -30,6 +30,7 @@ vi.mock("@/lib/custom-habit", async () => {
 import { handleInbound } from "@/lib/conversation";
 import { recordPayment, runTick } from "@/lib/engine";
 import { namesSensitiveHabit } from "@/lib/parse";
+import { webSignup, WEB_TEXTS_PER_HOUR } from "@/lib/web-signup";
 
 const ME = "+15125550101";
 const FRIEND = "+15125550202";
@@ -75,6 +76,8 @@ beforeEach(() => {
   state.sent = [];
   state.coachSays = "Take a short walk and text me after.";
   process.env.TWILIO_FROM_NUMBER = "+15125550100";
+  process.env.TWILIO_ACCOUNT_SID = "AC-test";
+  process.env.TWILIO_AUTH_TOKEN = "test-token";
   process.env.APP_URL = "https://www.consumptiondiet.com";
   delete process.env.LAUNCH_DATE;
 });
@@ -491,5 +494,117 @@ describe("nothing we send names a habit", () => {
     for (const message of state.sent) {
       expect(namesSensitiveHabit(message.body), message.body).toBe(false);
     }
+  });
+});
+
+describe("signing up on the website", () => {
+  const form = { firstName: "Sam", phone: "(512) 555-0101", habit: "sugar", consent: true };
+
+  it("saves the person and texts them once, then finishes by text", async () => {
+    const t = at("2026-12-31", "14:15");
+    state.db.now = t;
+    expect(await webSignup(form, t)).toEqual({ status: "texted" });
+    expect(state.sent.map((m) => m.to)).toEqual([ME, ME]);
+    expect(state.sent[0].body).toContain("Consumption Diet: Hi Sam, thanks for signing up.");
+    expect(state.sent[0].body).toContain("Reply STOP to cancel");
+    expect(state.sent[1].body).toContain("date of birth");
+
+    await text(ME, "04/12/1988 2:15pm", t);
+    await text(ME, "7am 8pm", t);
+    await text(ME, "YES", t);
+    expect(enrollment()).toMatchObject({ habit_slug: "sugar", status: "scheduled", start_date: "2027-01-01" });
+    expect(state.db.tables.users[0]).toMatchObject({ first_name: "Sam", convo_state: null });
+  });
+
+  it("sends nothing more if the number never replies", async () => {
+    const t = at("2026-12-31", "14:15");
+    state.db.now = t;
+    await webSignup(form, t);
+    expect(await webSignup(form, at("2026-12-31", "14:20"))).toEqual({ status: "already_texted" });
+    await tick(at("2027-01-01", "12:00"));
+    await tick(at("2027-01-02", "12:00"));
+    expect(state.sent).toHaveLength(2);
+    expect(state.db.tables.enrollments).toHaveLength(0);
+  });
+
+  it("asks the safety question first for a habit that has one", async () => {
+    const t = at("2026-12-31", "14:15");
+    state.db.now = t;
+    await webSignup({ ...form, habit: "alcohol" }, t);
+    expect(state.sent[1].body).toContain("Quick safety check");
+    for (const m of state.sent) expect(namesSensitiveHabit(m.body), m.body).toBe(false);
+  });
+
+  it("keeps people on a list until texting is switched on, then texts them during the day", async () => {
+    delete process.env.TWILIO_ACCOUNT_SID;
+    const t = at("2026-12-01", "22:00");
+    state.db.now = t;
+    expect(await webSignup(form, t)).toEqual({ status: "waitlist" });
+    expect(state.sent).toHaveLength(0);
+    expect(state.db.tables.users[0]).toMatchObject({ first_name: "Sam", convo_state: "web_pending", convo_data: { habit: "sugar", custom: null } });
+
+    process.env.TWILIO_ACCOUNT_SID = "AC-test";
+    expect(await tick(at("2026-12-20", "07:00"))).toEqual([]); // too early in the day
+    const sent = await tick(at("2026-12-20", "10:00"));
+    expect(sent).toHaveLength(2);
+    expect(sent[0]).toContain("Hi Sam, thanks for signing up.");
+    expect(await tick(at("2026-12-20", "10:15"))).toEqual([]);
+  });
+
+  it("checks the form before saving anything", async () => {
+    const t = at("2026-12-31", "14:15");
+    state.db.now = t;
+    expect(await webSignup({ ...form, firstName: " " }, t)).toMatchObject({ status: "invalid" });
+    expect(await webSignup({ ...form, phone: "555-0101" }, t)).toMatchObject({ status: "invalid" });
+    expect(await webSignup({ ...form, consent: false }, t)).toMatchObject({ status: "invalid" });
+    expect(await webSignup({ ...form, habit: "weed" }, t)).toMatchObject({ status: "invalid" });
+    expect(await webSignup({ ...form, habit: "other", customHabit: "weed" }, t)).toMatchObject({ status: "invalid" });
+    expect(await webSignup({ ...form, habit: "other", customHabit: "oxycodone" }, t)).toMatchObject({ status: "referral" });
+    expect(await webSignup({ ...form, website: "http://spam.example" }, t)).toEqual({ status: "waitlist" });
+    expect(state.db.tables.users).toHaveLength(0);
+    expect(state.sent).toHaveLength(0);
+  });
+
+  it("moves a typed habit onto the matching challenge, or keeps it as their own", async () => {
+    const t = at("2026-12-31", "14:15");
+    state.db.now = t;
+    await webSignup({ ...form, habit: "other", customHabit: "TikTok" }, t);
+    expect(state.db.tables.users[0].convo_data).toMatchObject({ habit: "social-media" });
+    await webSignup({ ...form, phone: "512-555-0202", habit: "other", customHabit: "biting my nails" }, t);
+    await text(FRIEND, "04/12/1988 2:15pm", t);
+    await text(FRIEND, "7am 8pm", t);
+    await text(FRIEND, "YES", t);
+    expect(state.db.tables.enrollments[0]).toMatchObject({ habit_slug: "other", custom_habit: "biting my nails" });
+  });
+
+  it("won't text a number that opted out or already has a challenge", async () => {
+    await signUp();
+    const before = state.sent.length;
+    expect(await webSignup(form, at("2027-01-01", "12:00"))).toEqual({ status: "already_enrolled" });
+    await text(ME, "STOP", at("2027-01-01", "12:01"));
+    enrollment().status = "canceled";
+    expect(await webSignup(form, at("2027-01-01", "12:02"))).toMatchObject({ status: "invalid" });
+    expect(state.sent).toHaveLength(before);
+  });
+
+  it("stops texting from the form once the hourly limit is reached", async () => {
+    const t = at("2026-12-31", "14:15");
+    state.db.now = t;
+    for (let i = 0; i < WEB_TEXTS_PER_HOUR; i += 1) {
+      state.db.tables.messages.push(state.db.newRow("messages", { direction: "out", kind: "onboarding", body: "x" }));
+    }
+    expect(await webSignup(form, t)).toEqual({ status: "waitlist" });
+    expect(state.sent).toHaveLength(0);
+  });
+
+  it("uses the website answers if they text BEGIN before we text them", async () => {
+    delete process.env.TWILIO_ACCOUNT_SID;
+    const t = at("2026-12-31", "14:15");
+    state.db.now = t;
+    await webSignup(form, t);
+    process.env.TWILIO_ACCOUNT_SID = "AC-test";
+    const replies = await text(ME, "BEGIN", t);
+    expect(replies[0]).toContain("Hi Sam");
+    expect(replies[1]).toContain("date of birth");
   });
 });

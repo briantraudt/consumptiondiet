@@ -7,6 +7,7 @@ import { startLabel, texts } from "@/lib/texts";
 // One example of every text the product can send.
 const samples: Record<string, string> = {
   intro: texts.intro(),
+  webIntro: texts.webIntro({ firstName: 'Christopherson-Smith' }),
   askHabitAgain: texts.askHabitAgain(),
   habitHeld: texts.habitHeld(),
   referral: texts.referral(TEXT_SCREENING.alcohol[0].referOnYes!),
